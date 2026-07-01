@@ -241,6 +241,11 @@ bool SDCardManager::openFileForWrite(const char* moduleName, const String& path,
   return openFileForWrite(moduleName, path.c_str(), file);
 }
 
+uint64_t SDCardManager::totalBytes() {
+  auto* card = sd.card();
+  return card ? static_cast<uint64_t>(card->sectorCount()) * static_cast<uint64_t>(512) : 0;
+}
+
 bool SDCardManager::removeDir(const char* path) {
   // 1. Open the directory
   auto dir = sd.open(path);

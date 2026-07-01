@@ -1,6 +1,7 @@
 #pragma once
 
 #include <WString.h>
+#include <cstdint>
 #include <vector>
 #include <string>
 #include <SdFat.h>
@@ -31,6 +32,10 @@ class SDCardManager {
   bool remove(const char* path) { return sd.remove(path); }
   bool rmdir(const char* path) { return sd.rmdir(path); }
   bool rename(const char* path, const char* newPath) { return sd.rename(path, newPath); }
+
+  // Total capacity of the SD card in bytes, derived from the card's raw
+  // sector count (512 bytes/sector). Returns 0 if no card is present.
+  uint64_t totalBytes();
 
   bool openFileForRead(const char* moduleName, const char* path, FsFile& file);
   bool openFileForRead(const char* moduleName, const std::string& path, FsFile& file);
